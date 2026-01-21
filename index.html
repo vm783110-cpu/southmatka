@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOUTH MATKA - Download App</title>
 
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '862354200095198');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=862354200095198&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
     body{
@@ -132,6 +150,13 @@
 
     .downloadBtn:active{transform:scale(0.98);}
 
+    .leadBtn{
+      background:linear-gradient(135deg,#1b57ff,#39a3ff);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(0,120,255,0.25);
+    }
+    .leadBtn:active{transform:scale(0.98);}
+
     .contact{
       margin:10px 0 8px;
       font-weight:800;
@@ -150,10 +175,19 @@
     }
     .waBtn:active{transform:scale(0.98);}
 
-    .footer{
+    /* TIMER */
+    .timerBox{
       margin-top:10px;
       font-size:14px;
-      color:#555;
+      font-weight:700;
+      color:#333;
+      background:#f3f3f3;
+      border-radius:12px;
+      padding:10px;
+    }
+    .timerBox span{
+      color:#d43b3b;
+      font-weight:900;
     }
   </style>
 </head>
@@ -181,8 +215,18 @@
     </div>
 
     <!-- DOWNLOAD BUTTON -->
-    <button class="btn downloadBtn" onclick="downloadAPK()">
+    <button class="btn downloadBtn" onclick="downloadAPK(true)">
       ⬇️ Download App
+    </button>
+
+    <!-- TIMER TEXT -->
+    <div class="timerBox">
+      Auto download starts in <span id="timer">10</span> seconds...
+    </div>
+
+    <!-- LEAD TRACK BUTTON -->
+    <button class="btn leadBtn" onclick="trackLead()">
+      ✅ Lead Track
     </button>
 
     <div class="contact">Contact Us</div>
@@ -193,7 +237,6 @@
       💬 WhatsApp
     </button>
 
-    <div class="footer">Fast • Clean • Mobile Friendly</div>
   </div>
 
   <script>
@@ -207,18 +250,49 @@
     };
 
     // ✅ Download APK (same name as you showed)
-    function downloadAPK() {
+    function downloadAPK(trackEvent = false) {
+      try {
+        if (trackEvent && window.fbq) {
+          fbq('track', 'DownloadApp');
+        }
+      } catch (e) {}
+
       // APK file must be in SAME folder as index.html
       window.location.href = "./SouthMatka.apk";
     }
 
+    // ✅ Lead Track Button (Meta Pixel Lead Event)
+    function trackLead() {
+      try {
+        if (window.fbq) {
+          fbq('track', 'Lead');
+        }
+        alert("Lead Tracked ✅");
+      } catch (e) {
+        alert("Lead Track Failed ❌");
+      }
+    }
+
     // ✅ WhatsApp Button
     function openWhatsApp() {
-      // Change number here
       const number = "9602276755";
       const msg = encodeURIComponent("Hello South Matka, I want to download the app.");
       window.location.href = `https://wa.me/${number}?text=${msg}`;
     }
+
+    // ✅ 10 seconds auto download timer
+    let timeLeft = 10;
+    const timerEl = document.getElementById("timer");
+
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        downloadAPK(false); // auto download (without button click)
+      }
+    }, 1000);
   </script>
 </body>
 </html>
