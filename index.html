@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOUTH MATKA - Download App</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+    body{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      background: linear-gradient(135deg,#f4f4f4,#ffffff);
+    }
+
+    .card{
+      width:100%;
+      max-width:420px;
+      background:#fff;
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      text-align:center;
+    }
+
+    /* LOGO */
+    .logoWrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-bottom:10px;
+    }
+
+    .logoImg{
+      width:280px;
+      max-width:95%;
+      height:auto;
+      display:block;
+    }
+
+    .fallbackText{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:2px;
+      display:none;
+    }
+    .fallbackText span:first-child{color:#ff6a00;}
+    .fallbackText span:last-child{color:#1e66ff;}
+
+    h2{
+      font-size:22px;
+      margin:8px 0 16px;
+      font-weight:800;
+    }
+    h2 span{color:#d43b3b;}
+
+    .slider{
+      width:100%;
+      height:14px;
+      background:#111;
+      border-radius:50px;
+      margin:10px 0 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .slider::before{
+      content:"";
+      position:absolute;
+      left:-40%;
+      top:0;
+      width:40%;
+      height:100%;
+      background:linear-gradient(90deg,transparent,#00ff88,transparent);
+      animation:slide 1.3s linear infinite;
+    }
+    @keyframes slide{
+      0%{left:-40%;}
+      100%{left:100%;}
+    }
+
+    .dots{
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      margin-bottom:16px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#bbb;
+    }
+    .dot.active{background:#ff6a00;}
+
+    .btn{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:14px;
+      font-size:20px;
+      font-weight:800;
+      cursor:pointer;
+      margin:10px 0;
+      transition:0.2s;
+    }
+
+    /* DOWNLOAD BUTTON (BLINK + PULSE) */
+    .downloadBtn{
+      background:linear-gradient(135deg,#c90000,#ff3a3a);
+      color:#fff;
+      box-shadow:0 0 0 rgba(255,0,0,0.0);
+      animation:blinkPulse 0.7s infinite;
+    }
+    @keyframes blinkPulse{
+      0%{
+        transform:scale(1);
+        filter:brightness(1);
+        box-shadow:0 0 0 rgba(255,0,0,0.0);
+      }
+      50%{
+        transform:scale(1.03);
+        filter:brightness(1.25);
+        box-shadow:0 0 22px rgba(255,0,0,0.55);
+      }
+      100%{
+        transform:scale(1);
+        filter:brightness(1);
+        box-shadow:0 0 0 rgba(255,0,0,0.0);
+      }
+    }
+
+    .downloadBtn:active{transform:scale(0.98);}
+
+    .contact{
+      margin:10px 0 8px;
+      font-weight:800;
+      color:#333;
+    }
+    .line{
+      width:90px;
+      margin:6px auto 14px;
+      border-bottom:3px dotted #555;
+    }
+
+    .waBtn{
+      background:linear-gradient(135deg,#0bbd4a,#2be06d);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(0,200,80,0.25);
+    }
+    .waBtn:active{transform:scale(0.98);}
+
+    .footer{
+      margin-top:10px;
+      font-size:14px;
+      color:#555;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+
+    <!-- LOGO -->
+    <div class="logoWrap">
+      <img src="./logo.png" class="logoImg" id="logoImg" alt="South Matka Logo">
+      <div class="fallbackText" id="fallbackText">
+        <span>SOUTH</span> <span>MATKA</span>
+      </div>
+    </div>
+
+    <h2>Welcome to <span>SouthMatka</span></h2>
+
+    <div class="slider"></div>
+
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- DOWNLOAD BUTTON -->
+    <button class="btn downloadBtn" onclick="downloadAPK()">
+      ⬇️ Download App
+    </button>
+
+    <div class="contact">Contact Us</div>
+    <div class="line"></div>
+
+    <!-- WHATSAPP BUTTON -->
+    <button class="btn waBtn" onclick="openWhatsApp()">
+      💬 WhatsApp
+    </button>
+
+    <div class="footer">Fast • Clean • Mobile Friendly</div>
+  </div>
+
+  <script>
+    // ✅ Logo fallback fix
+    const logoImg = document.getElementById("logoImg");
+    const fallbackText = document.getElementById("fallbackText");
+
+    logoImg.onerror = function () {
+      logoImg.style.display = "none";
+      fallbackText.style.display = "block";
+    };
+
+    // ✅ Download APK (same name as you showed)
+    function downloadAPK() {
+      // APK file must be in SAME folder as index.html
+      window.location.href = "./SouthMatka.apk";
+    }
+
+    // ✅ WhatsApp Button
+    function openWhatsApp() {
+      // Change number here
+      const number = "9602276755";
+      const msg = encodeURIComponent("Hello South Matka, I want to download the app.");
+      window.location.href = `https://wa.me/${number}?text=${msg}`;
+    }
+  </script>
+</body>
+</html>
